@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "pixbr"
+version = "0.1.0"
+description = "Access Brazilian Central Bank PIX Open Data API (pandas-friendly)"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [
+    { name = "Andre Leite", email = "leite@castlab.org" },
+    { name = "Marcos Wasilew", email = "marcos.wasilew@gmail.com" },
+    { name = "Hugo Vasconcelos", email = "hugo.vasconcelos@ufpe.br" },
+    { name = "Diogo Bezerra", email = "diogo.bezerra@ufpe.br" },
+]
+keywords = ["pix", "bcb", "banco central", "open data", "odata", "brazil"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "httpx>=0.27",
+    "pandas>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "respx>=0.21",
+]
+
+[project.urls]
+Homepage = "https://github.com/StrategicProjects/pixbr"
+Issues = "https://github.com/StrategicProjects/pixbr/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pixbr"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
