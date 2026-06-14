@@ -1,0 +1,92 @@
+site_name: pixbr
+site_description: >-
+  Python client for the Brazilian Central Bank (BCB) PIX Open Data API.
+  Retrieve data on PIX keys, transactions by municipality, transaction
+  statistics, and fraud data, with full OData query support — returned as
+  pandas DataFrames.
+site_url: https://strategicprojects.github.io/pixbr/
+repo_url: https://github.com/StrategicProjects/pixbr
+repo_name: StrategicProjects/pixbr
+copyright: >-
+  Developed by A. Leite, M. Wasilew, H. Vasconcelos, and D. Bezerra.
+  Data provided by the Brazilian Central Bank.
+
+theme:
+  name: material
+  language: en
+  font:
+    text: Roboto
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - toc.follow
+
+extra_css:
+  - stylesheets/extra.css
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: numpy
+            show_root_heading: true
+            show_source: false
+            heading_level: 3
+            members_order: source
+            separate_signature: true
+            show_signature_annotations: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets:
+      base_path: ["."]
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - Get Started: getting-started.md
+  - Guides:
+      - Understanding PIX Data: guides/understanding-pix-data.md
+      - Working with OData Queries: guides/odata-queries.md
+  - Examples: examples.md
+  - Reference: reference.md
+  - Changelog: changelog.md
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/StrategicProjects/pixbr
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/pixbr/

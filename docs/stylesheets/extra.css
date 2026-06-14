@@ -1,0 +1,18 @@
+/* Match the pixr site's green identity (#008060). */
+:root {
+  --md-primary-fg-color: #008060;
+  --md-primary-fg-color--light: #00a37b;
+  --md-primary-fg-color--dark: #006048;
+  --md-accent-fg-color: #00a37b;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #00a37b;
+  --md-accent-fg-color: #2ec49b;
+}
+
+/* Slightly tighter tables, common in data-heavy docs. */
+.md-typeset table:not([class]) th {
+  background-color: var(--md-primary-fg-color);
+  color: #fff;
+}

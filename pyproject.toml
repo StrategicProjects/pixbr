@@ -33,9 +33,16 @@ dev = [
     "pytest>=8.0",
     "respx>=0.21",
 ]
+docs = [
+    "mkdocs>=1.6",
+    "mkdocs-material>=9.5",
+    "mkdocstrings[python]>=0.26",
+    "black>=24.0",
+]
 
 [project.urls]
 Homepage = "https://github.com/StrategicProjects/pixbr"
+Documentation = "https://strategicprojects.github.io/pixbr/"
 Issues = "https://github.com/StrategicProjects/pixbr/issues"
 
 [tool.hatch.build.targets.wheel]
