@@ -4,11 +4,14 @@
 [![PyPI version](https://img.shields.io/pypi/v/pixbr.svg)](https://pypi.org/project/pixbr/)
 [![Python versions](https://img.shields.io/pypi/pyversions/pixbr.svg)](https://pypi.org/project/pixbr/)
 [![License: MIT](https://img.shields.io/pypi/l/pixbr.svg)](https://github.com/StrategicProjects/pixbr/blob/main/LICENSE)
+[![Docs](https://img.shields.io/badge/docs-online-008060.svg)](https://strategicprojects.github.io/pixbr/)
 
 Python client for the **Brazilian Central Bank (BCB) PIX Open Data API**
 ([Olinda / OData service](https://olinda.bcb.gov.br/olinda/servico/Pix_DadosAbertos/versao/v1/aplicacao)).
 It hides the BCB's unusual OData URL syntax and returns
 [pandas](https://pandas.pydata.org/) DataFrames.
+
+📖 **Documentation:** <https://strategicprojects.github.io/pixbr/>
 
 This is the Python counterpart of the R package
 [`pixr`](https://github.com/StrategicProjects/pixr).
