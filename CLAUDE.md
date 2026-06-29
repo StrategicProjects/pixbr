@@ -61,9 +61,9 @@ python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"   # also ".[docs]"
 - `docs.yml` — builds MkDocs and deploys to GitHub Pages (source = GitHub
   Actions, already enabled).
 - Actions pinned to Node-24 majors (checkout@v6, setup-python@v6,
-  upload-artifact@v7, download-artifact@v8). A residual Node-20 deprecation
-  warning comes from inside the official `actions/upload-pages-artifact@v3`
-  (transitive) — benign, can't fix locally.
+  upload-artifact@v7, download-artifact@v8, upload-pages-artifact@v5,
+  deploy-pages@v5). The old Node-20 warning from `upload-pages-artifact@v3`
+  is gone since v5 (Apr 2026) switched to `upload-artifact@v7` / node24.
 
 ## Conventions
 
@@ -74,7 +74,6 @@ python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"   # also ".[docs]"
 
 ## Possible next steps (not started)
 
-- Bump actions when `upload-pages-artifact` ships a Node-24 release.
 - More tests (aggregations, client behaviour) — currently URL/parsers/utils.
 - Optional: typed `from __future__` already used; consider adding `py.typed`
   marker if users want type info.
