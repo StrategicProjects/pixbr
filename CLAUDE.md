@@ -25,9 +25,26 @@ src/pixbr/
   utils.py       # format_brl, year_month_to_date, pix_endpoints, pix_columns
 tests/           # pytest; respx for HTTP mocks
 docs/            # MkDocs Material source
+  assets/        # logo.svg (hex sticker), logo.png, favicon.svg, logo-wordmark.svg
 mkdocs.yml
 .github/workflows/  ci.yml, publish.yml, docs.yml
 ```
+
+## Branding / logo
+
+- Hex-sticker logo adapted from the R package `pixr` (`../pixr/man/figures/logo.svg`):
+  same official PIX mark/wordmark on a hexagon, recoloured to pixbr's green
+  identity (`#008060`, gradient `#13a884`→`#008060`) with a hand-built **monoline
+  "br"** matching the PIX wordmark (stroke ~3.6, round caps). All vector, no font
+  dependency. Wordmark metrics: baseline y=147.25, x-height top y=111, ascender/
+  diamond top ~95; PIX diamond-mark bbox centre (109.25, 101.0).
+- Assets in `docs/assets/`: `logo.svg`/`logo.png` (full hex sticker),
+  `favicon.svg` (hex + enlarged white mark, centred on hex centroid 128,128),
+  `logo-wordmark.svg` (white transparent wordmark for the green header bar).
+- Wired in `mkdocs.yml` (`theme.logo` = logo-wordmark.svg, `theme.favicon`).
+  Shown right-aligned in both `README.md` (absolute raw URL so it renders on
+  PyPI too) and `docs/index.md` (relative `assets/logo.svg`).
+- Render/measure with `rsvg-convert` (installed); inkscape is not.
 
 ## Design decisions
 
