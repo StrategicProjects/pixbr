@@ -1,5 +1,7 @@
 # pixbr
 
+<img src="assets/logo.svg" align="right" height="150" alt="pixbr logo" />
+
 [![CI](https://github.com/StrategicProjects/pixbr/actions/workflows/ci.yml/badge.svg)](https://github.com/StrategicProjects/pixbr/actions/workflows/ci.yml)
 [![PyPI version](https://img.shields.io/pypi/v/pixbr.svg)](https://pypi.org/project/pixbr/)
 [![Python versions](https://img.shields.io/pypi/pyversions/pixbr.svg)](https://pypi.org/project/pixbr/)
