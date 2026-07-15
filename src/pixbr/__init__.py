@@ -40,7 +40,7 @@ from .api import (
     pix_url,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 __all__ = [
     "PixClient",

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1
+
+Metadata release (no code changes).
+
+- Corrected author name spellings (André Leite, Marcos Wasiliew) in package
+  metadata, LICENSE, and docs; added Carlos Amorim to the author list.
+- Added `CITATION.cff` and `.zenodo.json` for citation metadata and Zenodo
+  archiving (DOI).
+
 ## 0.1.0
 
 First release.

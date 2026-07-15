@@ -1,0 +1,49 @@
+{
+  "upload_type": "software",
+  "title": "pixbr: Access the Brazilian Central Bank PIX Open Data API from Python",
+  "description": "Python client for the Brazilian Central Bank (BCB) PIX Open Data API (Olinda / OData). Hides the BCB's non-standard OData URL syntax and returns pandas DataFrames. Python counterpart of the R package pixr.",
+  "license": "MIT",
+  "creators": [
+    {
+      "name": "Leite, André",
+      "affiliation": "Universidade Federal de Pernambuco"
+    },
+    {
+      "name": "Wasiliew, Marcos"
+    },
+    {
+      "name": "Vasconcelos, Hugo",
+      "affiliation": "Universidade Federal de Pernambuco"
+    },
+    {
+      "name": "Bezerra, Diogo",
+      "affiliation": "Universidade Federal de Pernambuco"
+    },
+    {
+      "name": "Amorim, Carlos",
+      "affiliation": "Universidade Federal de Pernambuco"
+    }
+  ],
+  "keywords": [
+    "pix",
+    "bcb",
+    "banco central do brasil",
+    "open data",
+    "odata",
+    "brazil",
+    "python",
+    "pandas"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://pypi.org/project/pixbr/",
+      "relation": "isIdenticalTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://github.com/StrategicProjects/pixr",
+      "relation": "isDerivedFrom",
+      "resource_type": "software"
+    }
+  ]
+}
