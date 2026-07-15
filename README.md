@@ -7,6 +7,7 @@
 [![Python versions](https://img.shields.io/pypi/pyversions/pixbr.svg)](https://pypi.org/project/pixbr/)
 [![License: MIT](https://img.shields.io/pypi/l/pixbr.svg)](https://github.com/StrategicProjects/pixbr/blob/main/LICENSE)
 [![Docs](https://img.shields.io/badge/docs-online-008060.svg)](https://strategicprojects.github.io/pixbr/)
+[![DOI](https://zenodo.org/badge/1269512998.svg)](https://doi.org/10.5281/zenodo.21366255)
 
 Python client for the **Brazilian Central Bank (BCB) PIX Open Data API**
 ([Olinda / OData service](https://olinda.bcb.gov.br/olinda/servico/Pix_DadosAbertos/versao/v1/aplicacao)).
