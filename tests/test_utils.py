@@ -28,7 +28,7 @@ def test_year_month_to_date_vector():
 
 def test_pix_endpoints_shape():
     df = pix_endpoints()
-    assert len(df) == 4
+    assert len(df) == 6
     assert set(["endpoint", "parameter", "method"]).issubset(df.columns)
 
 

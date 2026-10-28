@@ -62,6 +62,16 @@ def get_pix_fraud_stats(database: str, *, verbose: bool = True, **kwargs) -> pd.
         return c.fraud_stats(database=database, verbose=verbose, **kwargs)
 
 
+def get_pix_cnae_stats(database: str, *, verbose: bool = True, **kwargs) -> pd.DataFrame:
+    with PixClient(verbose=verbose) as c:
+        return c.cnae_stats(database=database, verbose=verbose, **kwargs)
+
+
+def get_pix_dict_users(*, verbose: bool = True, **kwargs) -> pd.DataFrame:
+    with PixClient(verbose=verbose) as c:
+        return c.dict_users(verbose=verbose, **kwargs)
+
+
 def _get_multi(method_name: str, databases: Sequence[str], **kwargs) -> pd.DataFrame:
     frames: List[pd.DataFrame] = []
     with PixClient(verbose=False) as c:

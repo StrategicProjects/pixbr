@@ -17,8 +17,9 @@ It is the Python counterpart of the R package
 
 ## Features
 
-- **Four endpoints, one interface** — PIX keys, transactions by municipality,
-  transaction statistics, and fraud (MED) statistics.
+- **Six endpoints, one interface** — PIX keys, transactions by municipality,
+  transaction statistics, fraud (MED) statistics, receiver profiles
+  (CNAE/size/MEI), and users registered in the DICT.
 - **pandas-native** — every call returns a DataFrame with numeric columns
   already coerced.
 - **Full OData support** — `filter`, `select` (`columns`), `orderby`, `top`.

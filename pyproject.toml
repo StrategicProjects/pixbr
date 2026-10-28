@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pixbr"
-version = "0.1.1"
+version = "0.2.0"
 description = "Access Brazilian Central Bank PIX Open Data API (pandas-friendly)"
 readme = "README.md"
 requires-python = ">=3.9"
@@ -13,8 +13,8 @@ authors = [
     { name = "André Leite", email = "leite@castlab.org" },
     { name = "Marcos Wasiliew", email = "marcos.wasiliew@gmail.com" },
     { name = "Hugo Vasconcelos", email = "hugo.vasconcelos@ufpe.br" },
-    { name = "Diogo Bezerra", email = "diogo.bezerra@ufpe.br" },
     { name = "Carlos Amorim", email = "carlos.agaf@ufpe.br" },
+    { name = "Diogo Bezerra", email = "diogo.bezerra@ufpe.br" },
     { name = "Júlia Nascimento Barreto", email = "juliabarreto@gd.seplag.pe.gov.br" },
 ]
 maintainers = [

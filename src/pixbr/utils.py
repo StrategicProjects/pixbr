@@ -20,6 +20,10 @@ def pix_endpoints() -> pd.DataFrame:
              "transaction_stats", "Transaction statistics with breakdowns"),
             ("EstatisticasFraudesPix", "Database", "YYYYMM",
              "fraud_stats", "Fraud statistics (MED)"),
+            ("CnaePorteRecebedor", "Database", "YYYYMM",
+             "cnae_stats", "Statistics by receiver CNAE section and company size"),
+            ("PixUsuariosCadastradosDICT", None, None,
+             "dict_users", "Monthly series of users registered in DICT"),
         ],
         columns=["endpoint", "parameter", "param_format", "method", "description"],
     )
@@ -71,7 +75,65 @@ _COLUMNS = {
     ],
     "fraud": [
         ("AnoMes", "integer", "Reference year-month (YYYYMM)"),
-        ("(varies)", "varies", "Fraud statistics columns - query the API for the full schema"),
+        ("QtdePixcontestados", "numeric", "Contested PIX transactions"),
+        ("Qtdecontestacoesaceitas", "numeric", "Accepted contestations"),
+        ("Qtdecontestacoesrejeitadas", "numeric", "Rejected contestations"),
+        ("Qtdecontestacoesaceitasacada100mil", "numeric",
+         "Accepted contestations per 100k transactions"),
+        ("QtdeUsuarioscommarcacoesdefraude", "numeric", "Users with fraud markings"),
+        ("QtdeChavesPixcommarcacoesdefraude", "numeric", "PIX keys with fraud markings"),
+        ("ValorPixcontestadosaceitos", "numeric", "Value of accepted contested PIX (BRL)"),
+        ("QuantidadedevolvidaintegralmentepormeiodoMED", "numeric",
+         "Fully returned via MED (count)"),
+        ("ValorPixdevolvidosintegralmente", "numeric", "Fully returned via MED (BRL)"),
+        ("QuantidadedevolvidaparcialmentepormeiodoMED", "numeric",
+         "Partially returned via MED (count)"),
+        ("ValorPixdevolvidosparcialmente", "numeric", "Partially returned via MED (BRL)"),
+        ("ValorPixresidualnaodevolvido", "numeric", "Residual value not returned (BRL)"),
+        ("Quantidadedenaodevolvidossaldoinsuficiente", "numeric",
+         "Not returned: insufficient balance (count)"),
+        ("ValorPixnaodevolvidossaldoinsuficiente", "numeric",
+         "Not returned: insufficient balance (BRL)"),
+        ("Quantidadedenaodevolvidoscontaencerrada", "numeric",
+         "Not returned: closed account (count)"),
+        ("Valornaodevolvidoscontaencerrada", "numeric",
+         "Not returned: closed account (BRL)"),
+        ("Quantidadedenaodevolvidosmotivosdiversos", "numeric",
+         "Not returned: other reasons (count)"),
+        ("ValorPixnaodevolvidosmotivosdiversos", "numeric",
+         "Not returned: other reasons (BRL)"),
+        ("PercentualdeDevolucao", "numeric", "Return percentage"),
+        ("QtdePixbloqueadoscautelarmenteeliberados", "numeric",
+         "Precautionarily blocked and released (count)"),
+        ("ValorPixbloqueadoscautelarmenteeliberados", "numeric",
+         "Precautionarily blocked and released (BRL)"),
+        ("QtdePixbloqueadoscautelarmenteedevolvidos", "numeric",
+         "Precautionarily blocked and returned (count)"),
+        ("ValorPixbloqueadoscautelarmenteedevolvidos", "numeric",
+         "Precautionarily blocked and returned (BRL)"),
+    ],
+    "cnae": [
+        ("AnoMes", "integer", "Reference year-month (YYYYMM)"),
+        ("tipopessoa", "string", "Receiver type: PF (Individual) or PJ (Legal Entity)"),
+        ("formainic", "string", "Initiation method (DICT, QRDN, QRES, MANU, INIC)"),
+        ("finalidade", "string", "Transaction purpose (Pix, Pix Saque, Pix Troco)"),
+        ("porte", "string", "Company size (e.g. Microempresa)"),
+        ("mei", "string", "Individual microentrepreneur flag (S/N)"),
+        ("cnssecao", "string", "CNAE section of the receiver's economic activity"),
+        ("mesmatit", "string", "Payer and receiver are the same person (S/N)"),
+        ("naturezarel", "string", "Transaction nature (P2P, P2B, B2P, B2B, ...)"),
+        ("qtpagador", "numeric", "Distinct payers"),
+        ("qtrecebedor", "numeric", "Distinct receivers"),
+        ("qtlanliq", "numeric", "Number of settled transactions"),
+        ("vllanliq", "numeric", "Value of settled transactions (BRL)"),
+        ("vlcompra", "numeric", "Purchase value (BRL, Pix Troco)"),
+        ("vldinespec", "numeric", "Cash value (BRL, Pix Saque / Pix Troco)"),
+    ],
+    "dict_users": [
+        ("DataGraficosPix", "date", "Reference date (last day of month)"),
+        ("qtdUsuariosPessoaFisica", "numeric", "Individual users (PF) registered in DICT"),
+        ("qtdUsuariosPessoaJuridica", "numeric", "Legal entity users (PJ) registered in DICT"),
+        ("qtdUsuariosCadastradosDICTTotal", "numeric", "Total users registered in DICT"),
     ],
 }
 
@@ -79,7 +141,8 @@ _COLUMNS = {
 def pix_columns(endpoint: str = "keys") -> pd.DataFrame:
     """Return column metadata for an endpoint.
 
-    ``endpoint`` is one of ``"keys"``, ``"municipality"``, ``"stats"``, ``"fraud"``.
+    ``endpoint`` is one of ``"keys"``, ``"municipality"``, ``"stats"``,
+    ``"fraud"``, ``"cnae"``, or ``"dict_users"``.
     """
     if endpoint not in _COLUMNS:
         raise ValueError(

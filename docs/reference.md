@@ -32,6 +32,11 @@ These mirror the R package `pixr`. Each creates a short-lived
 ::: pixbr.get_pix_fraud_stats
 ::: pixbr.get_pix_fraud_stats_multi
 
+### Receiver profiles and DICT users
+
+::: pixbr.get_pix_cnae_stats
+::: pixbr.get_pix_dict_users
+
 ## API utilities
 
 ::: pixbr.pix_ping

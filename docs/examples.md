@@ -84,5 +84,5 @@ muni.sort_values("total_recebido", ascending=False).head(10)
 ```python
 from pixbr import pix_ping
 
-pix_ping()   # status for all four endpoints
+pix_ping()   # status for all six endpoints
 ```

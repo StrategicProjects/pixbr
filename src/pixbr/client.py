@@ -14,11 +14,14 @@ from ._odata import ParamValue
 logger = logging.getLogger("pixbr")
 
 # Endpoint metadata: endpoint name -> (param name, param format).
+# PixUsuariosCadastradosDICT takes no parameter (plain entity set).
 ENDPOINTS = {
     "ChavesPix": ("Data", "YYYY-MM-DD"),
     "TransacoesPixPorMunicipio": ("DataBase", "YYYYMM"),
     "EstatisticasTransacoesPix": ("Database", "YYYYMM"),
     "EstatisticasFraudesPix": ("Database", "YYYYMM"),
+    "CnaePorteRecebedor": ("Database", "YYYYMM"),
+    "PixUsuariosCadastradosDICT": (None, None),
 }
 
 _USER_AGENT = "pixbr Python package (https://github.com/StrategicProjects/pixbr)"
@@ -285,9 +288,37 @@ class PixClient:
     ) -> pd.DataFrame:
         """PIX fraud statistics / MED (EstatisticasFraudesPix endpoint).
 
-        ``database`` is required, in YYYYMM form. The exact schema varies, so
-        columns are not validated; numeric-looking columns are coerced.
+        ``database`` is required, in YYYYMM form. See ``pix_columns("fraud")``
+        for the full schema; every column except ``AnoMes`` is a count, value,
+        or percentage and is coerced to numeric.
         """
+        valid = [
+            "AnoMes",
+            "QtdePixcontestados",
+            "Qtdecontestacoesaceitas",
+            "Qtdecontestacoesrejeitadas",
+            "Qtdecontestacoesaceitasacada100mil",
+            "QtdeUsuarioscommarcacoesdefraude",
+            "QtdeChavesPixcommarcacoesdefraude",
+            "ValorPixcontestadosaceitos",
+            "QuantidadedevolvidaintegralmentepormeiodoMED",
+            "ValorPixdevolvidosintegralmente",
+            "QuantidadedevolvidaparcialmentepormeiodoMED",
+            "ValorPixdevolvidosparcialmente",
+            "ValorPixresidualnaodevolvido",
+            "Quantidadedenaodevolvidossaldoinsuficiente",
+            "ValorPixnaodevolvidossaldoinsuficiente",
+            "Quantidadedenaodevolvidoscontaencerrada",
+            "Valornaodevolvidoscontaencerrada",
+            "Quantidadedenaodevolvidosmotivosdiversos",
+            "ValorPixnaodevolvidosmotivosdiversos",
+            "PercentualdeDevolucao",
+            "QtdePixbloqueadoscautelarmenteeliberados",
+            "ValorPixbloqueadoscautelarmenteeliberados",
+            "QtdePixbloqueadoscautelarmenteedevolvidos",
+            "ValorPixbloqueadoscautelarmenteedevolvidos",
+        ]
+        columns = _odata.validate_columns(columns, valid)
         df = self.query(
             "EstatisticasFraudesPix",
             {"Database": _odata.parse_year_month(database)},
@@ -298,19 +329,101 @@ class PixClient:
             skip=skip,
             verbose=verbose,
         )
-        if not df.empty:
-            patterns = ("QT_", "VL_", "QUANTIDADE", "VALOR", "ANOMES")
-            numeric = [c for c in df.columns if any(p in c.upper() for p in patterns)]
-            df = _coerce_numeric(df, numeric)
-        return df
+        return _coerce_numeric(df, valid)
+
+    def cnae_stats(
+        self,
+        database: str,
+        *,
+        filter: Optional[str] = None,
+        columns: Optional[Sequence[str]] = None,
+        top: Optional[int] = None,
+        skip: Optional[int] = None,
+        orderby: Optional[str] = None,
+        verbose: Optional[bool] = None,
+    ) -> pd.DataFrame:
+        """PIX statistics by receiver CNAE section, company size, and MEI
+        status (CnaePorteRecebedor endpoint).
+
+        ``database`` is required, in YYYYMM form.
+
+        .. note::
+           As with the municipality endpoint, ``database`` selects the data
+           *snapshot*, and the response can contain rows for several reference
+           months. To analyze a single month, add an ``AnoMes`` filter, e.g.
+           ``filter="AnoMes eq 202506"``.
+        """
+        valid = [
+            "AnoMes", "tipopessoa", "formainic", "finalidade", "porte", "mei",
+            "cnssecao", "mesmatit", "naturezarel",
+            "qtpagador", "qtrecebedor", "qtlanliq",
+            "vllanliq", "vlcompra", "vldinespec",
+        ]
+        columns = _odata.validate_columns(columns, valid)
+        df = self.query(
+            "CnaePorteRecebedor",
+            {"Database": _odata.parse_year_month(database)},
+            filter=filter,
+            select=columns,
+            orderby=orderby,
+            top=top,
+            skip=skip,
+            verbose=verbose,
+        )
+        return _coerce_numeric(
+            df,
+            ["AnoMes", "qtpagador", "qtrecebedor", "qtlanliq",
+             "vllanliq", "vlcompra", "vldinespec"],
+        )
+
+    def dict_users(
+        self,
+        *,
+        filter: Optional[str] = None,
+        columns: Optional[Sequence[str]] = None,
+        top: Optional[int] = None,
+        orderby: Optional[str] = None,
+        verbose: Optional[bool] = None,
+    ) -> pd.DataFrame:
+        """Monthly series of users registered in the DICT
+        (PixUsuariosCadastradosDICT endpoint).
+
+        Unlike the other endpoints, this one takes no reference-date
+        parameter: a single request returns the full monthly series (one
+        observation per month-end since November 2020). ``DataGraficosPix``
+        is parsed to datetime.
+        """
+        valid = [
+            "DataGraficosPix", "qtdUsuariosPessoaFisica",
+            "qtdUsuariosPessoaJuridica", "qtdUsuariosCadastradosDICTTotal",
+        ]
+        columns = _odata.validate_columns(columns, valid)
+        df = self.query(
+            "PixUsuariosCadastradosDICT",
+            None,
+            filter=filter,
+            select=columns,
+            orderby=orderby,
+            top=top,
+            verbose=verbose,
+        )
+        if not df.empty and "DataGraficosPix" in df.columns:
+            df["DataGraficosPix"] = pd.to_datetime(df["DataGraficosPix"], errors="coerce")
+        return _coerce_numeric(
+            df,
+            ["qtdUsuariosPessoaFisica", "qtdUsuariosPessoaJuridica",
+             "qtdUsuariosCadastradosDICTTotal"],
+        )
 
     def ping(self) -> pd.DataFrame:
-        """Test connectivity to all four endpoints with a single-record request."""
+        """Test connectivity to all endpoints with a single-record request."""
         probes = {
             "ChavesPix": {"Data": "2025-01-01"},
             "TransacoesPixPorMunicipio": {"DataBase": "202501"},
             "EstatisticasTransacoesPix": {"Database": "202501"},
             "EstatisticasFraudesPix": {"Database": "202501"},
+            "CnaePorteRecebedor": {"Database": "202501"},
+            "PixUsuariosCadastradosDICT": None,
         }
         rows = []
         for endpoint, params in probes.items():

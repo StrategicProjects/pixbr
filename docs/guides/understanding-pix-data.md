@@ -35,7 +35,7 @@ Key features:
 
 ## Datasets available through pixbr
 
-The BCB exposes four datasets. Use `pix_columns(...)` to see the columns of
+The BCB exposes six datasets. Use `pix_columns(...)` to see the columns of
 each.
 
 ### 1. PIX keys stock — `ChavesPix`
@@ -98,4 +98,32 @@ covering fraud reports and refund requests. **Parameter:** `Database` in
 
 ```python
 fraud = client.fraud_stats("202509")
+```
+
+### 5. Receiver profiles — `CnaePorteRecebedor`
+
+PIX statistics profiled by the *receiver*: economic activity (CNAE section),
+company size, and MEI (individual microentrepreneur) status, plus initiation
+method and transaction purpose. **Parameter:** `Database` in `YYYYMM` form.
+
+!!! warning "`database` selects a snapshot, not a month"
+    As with the municipality endpoint, `database` picks the data *snapshot*
+    and the response can mix several reference months. Add an `AnoMes` filter
+    to analyze a single month.
+
+```python
+cnae = client.cnae_stats("202506", filter="AnoMes eq 202506")
+mei = client.cnae_stats("202506", filter="AnoMes eq 202506 and mei eq 'S'")
+```
+
+### 6. Users registered in the DICT — `PixUsuariosCadastradosDICT`
+
+Monthly series of users with at least one PIX key registered in the DICT,
+split into individuals (PF) and legal entities (PJ). **No parameter** — a
+single request returns the full series (one observation per month-end since
+November 2020), with `DataGraficosPix` parsed to datetime.
+
+```python
+users = client.dict_users()
+recent = client.dict_users(orderby="DataGraficosPix desc", top=12)
 ```

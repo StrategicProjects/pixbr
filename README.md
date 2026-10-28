@@ -125,8 +125,10 @@ client.build_url("EstatisticasTransacoesPix", {"Database": "202509"},
 | `TransacoesPixPorMunicipio` | `DataBase` (YYYYMM) | `.transactions_by_municipality()` | `get_pix_transactions_by_municipality()` |
 | `EstatisticasTransacoesPix` | `Database` (YYYYMM) | `.transaction_stats()` | `get_pix_transaction_stats()` |
 | `EstatisticasFraudesPix` | `Database` (YYYYMM) | `.fraud_stats()` | `get_pix_fraud_stats()` |
+| `CnaePorteRecebedor` | `Database` (YYYYMM) | `.cnae_stats()` | `get_pix_cnae_stats()` |
+| `PixUsuariosCadastradosDICT` | (none) | `.dict_users()` | `get_pix_dict_users()` |
 
-Use `pix_endpoints()` and `pix_columns("keys"|"municipality"|"stats"|"fraud")`
+Use `pix_endpoints()` and `pix_columns("keys"|"municipality"|"stats"|"fraud"|"cnae"|"dict_users")`
 to inspect available endpoints and columns.
 
 ## OData query parameters
@@ -148,7 +150,7 @@ All endpoint methods accept the common OData parameters:
   queries.
 - `client.build_url(...)` / `pix_url(...)` return the request URL without
   sending it (handy for debugging).
-- `client.ping()` / `pix_ping()` test connectivity to all four endpoints.
+- `client.ping()` / `pix_ping()` test connectivity to all six endpoints.
 
 ## License
 

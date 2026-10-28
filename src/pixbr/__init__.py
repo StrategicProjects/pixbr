@@ -24,6 +24,8 @@ from .utils import (
     year_month_to_date,
 )
 from .api import (
+    get_pix_cnae_stats,
+    get_pix_dict_users,
     get_pix_fraud_stats,
     get_pix_fraud_stats_multi,
     get_pix_keys,
@@ -40,7 +42,7 @@ from .api import (
     pix_url,
 )
 
-__version__ = "0.1.1"
+__version__ = "0.2.0"
 
 __all__ = [
     "PixClient",
@@ -63,6 +65,8 @@ __all__ = [
     "get_pix_transactions_by_region",
     "get_pix_fraud_stats",
     "get_pix_fraud_stats_multi",
+    "get_pix_cnae_stats",
+    "get_pix_dict_users",
     "pix_ping",
     "pix_query",
     "pix_url",

@@ -2,7 +2,7 @@ cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 type: software
 title: "pixbr: Access the Brazilian Central Bank PIX Open Data API from Python"
-version: 0.1.1
+version: 0.2.0
 doi: 10.5281/zenodo.21366255
 license: MIT
 repository-code: "https://github.com/StrategicProjects/pixbr"
@@ -26,16 +26,16 @@ authors:
     email: hugo.vasconcelos@ufpe.br
     affiliation: "Universidade Federal de Pernambuco"
     orcid: "https://orcid.org/0000-0001-6249-0920"
-  - family-names: Bezerra
-    given-names: Diogo
-    email: diogo.bezerra@ufpe.br
-    affiliation: "Universidade Federal de Pernambuco"
-    orcid: "https://orcid.org/0000-0002-1216-8674"
   - family-names: Amorim
     given-names: Carlos
     email: carlos.agaf@ufpe.br
     affiliation: "Universidade Federal de Pernambuco"
     orcid: "https://orcid.org/0000-0001-6315-8305"
+  - family-names: Bezerra
+    given-names: Diogo
+    email: diogo.bezerra@ufpe.br
+    affiliation: "Universidade Federal de Pernambuco"
+    orcid: "https://orcid.org/0000-0002-1216-8674"
   - family-names: Nascimento Barreto
     given-names: Júlia
     email: juliabarreto@gd.seplag.pe.gov.br
