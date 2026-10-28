@@ -9,10 +9,22 @@ syntax.
 - **Folder:** `/Users/leite/Github/pixbr` (was initially scaffolded as `pixpy`,
   then renamed).
 - **Repo:** https://github.com/StrategicProjects/pixbr (public, branch `main`).
-- **PyPI:** https://pypi.org/project/pixbr/ (v0.1.0 published).
+- **PyPI:** https://pypi.org/project/pixbr/ (v0.2.0 published 2026-10-28,
+  via Trusted Publishing on tag push).
 - **Docs site:** https://strategicprojects.github.io/pixbr/ (MkDocs Material).
 - **gh CLI** is authed as `milkway`, who is a member of the `StrategicProjects`
   org.
+
+## Endpoints
+
+Six BCB endpoints (since 0.2.0): the original four plus `CnaePorteRecebedor`
+(`cnae_stats`, receiver CNAE/size/MEI) and `PixUsuariosCadastradosDICT`
+(`dict_users`, monthly DICT users series, **no parameter**, `DataGraficosPix`
+parsed to datetime). **Gotcha:** on `CnaePorteRecebedor` (and the municipality
+endpoint) the `Database` param selects the data *snapshot*, not the month —
+the response mixes several `AnoMes`; filter with `AnoMes eq YYYYMM` for one
+month. All data is monthly. To check for new endpoints, diff the OData
+`$metadata` (EntityType/FunctionImport) against `ENDPOINTS` in `client.py`.
 
 ## Layout
 
@@ -64,13 +76,15 @@ mkdocs.yml
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"   # also ".[docs]"
-.venv/bin/python -m pytest -q       # 20 tests
+.venv/bin/python -m pytest -q       # 30 tests
 .venv/bin/mkdocs build --strict     # build docs locally
 ```
 
 ## CI/CD
 
-- `ci.yml` — pytest matrix Python 3.9–3.13 on push/PR.
+- `ci.yml` — pytest matrix Python 3.10–3.14 on push/PR (3.9 dropped: EOL
+  Oct 2025 and absent from Ubuntu 26.04 runners; `requires-python >=3.10`
+  takes effect on PyPI at the next release).
 - `publish.yml` — on tag `v*` or GitHub Release, builds + publishes to PyPI via
   **Trusted Publishing (OIDC)**, no token. PyPI trusted publisher is configured
   (workflow `publish.yml`, environment `pypi`). To release: bump `version` in
@@ -84,13 +98,19 @@ python3 -m venv .venv && .venv/bin/pip install -e ".[dev]"   # also ".[docs]"
 
 ## Conventions
 
-- Commit message trailer: `Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>`.
+- Author list and order are canonical in `../alepe/DESCRIPTION` (Leite,
+  Wasiliew, Vasconcelos, Amorim, Bezerra, Nascimento Barreto, all with
+  ORCIDs); keep `pyproject.toml`, `CITATION.cff` and `.zenodo.json` aligned.
+
+- Commit message trailer: use the Claude Code attribution line for the model
+  in use (e.g. `Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>`).
 - Docstrings are NumPy-style (mkdocstrings is configured for that). The docs
   Reference page is auto-generated from them — keep docstrings accurate.
 - Match the green `#008060` identity from the `pixr` site in any docs styling.
 
 ## Possible next steps (not started)
 
-- More tests (aggregations, client behaviour) — currently URL/parsers/utils.
+- More tests (aggregations, client behaviour) — currently URL/parsers/utils
+  plus respx-mocked client tests for the new endpoints.
 - Optional: typed `from __future__` already used; consider adding `py.typed`
   marker if users want type info.
