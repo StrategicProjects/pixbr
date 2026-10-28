@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Dropped support for Python 3.9 (end of life since October 2025);
+  requires-python is now >=3.10. CI matrix updated to 3.10-3.14.
+
 ## 0.2.0
 
 New endpoints added upstream by the BCB, mirroring pixr 0.1.1:
